@@ -19,18 +19,19 @@ public class Wand : SteamVR_InteractableObject
         bullet = this.transform.Find("Firebolt").gameObject;
     }
 
+    protected override void Update()
+    {
+	    base.Update();
+    }
+
     void FireBullet()
     {
 	bulletClone = Instantiate(bullet, bullet.transform.position, Quaternion.identity) as GameObject;
-	//bulletClone.SetActive(true);
-	//FireProjectileScript pscript = bulletClone.GetComponentInChildren<FireProjectileScript>();
+	FireProjectileScript projectileScript = bulletClone.GetComponentInChildren<FireProjectileScript>();
+	projectileScript.ProjectileCollisionLayers &= (~UnityEngine.LayerMask.NameToLayer("FriendlyLayer"));
 
-	/*
-        GameObject bulletClone = Instantiate(bullet, bullet.transform.position, Quaternion.identity) as GameObject;
-        bulletClone.SetActive(true);
-        Rigidbody rb = bulletClone.GetComponent<Rigidbody>();
-        rb.AddRelativeForce(-transform.forward * bulletSpeed);
-        Destroy(bulletClone, bulletLife);
-	*/
+	//bulletClone.transform.parent = null;
+	transform.parent = null;
+	bulletClone.SetActive(true);
     }
 }
