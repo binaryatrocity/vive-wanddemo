@@ -1,0 +1,36 @@
+﻿using UnityEngine;
+using System.Collections;
+using DigitalRuby.PyroParticles;
+
+public class Wand : SteamVR_InteractableObject
+{
+    GameObject bullet;
+    GameObject bulletClone;
+
+    public override void StartUsing(GameObject usingObject)
+    {
+        base.StartUsing(usingObject);
+        FireBullet();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        bullet = this.transform.Find("Firebolt").gameObject;
+    }
+
+    void FireBullet()
+    {
+	bulletClone = Instantiate(bullet, bullet.transform.position, Quaternion.identity) as GameObject;
+	//bulletClone.SetActive(true);
+	//FireProjectileScript pscript = bulletClone.GetComponentInChildren<FireProjectileScript>();
+
+	/*
+        GameObject bulletClone = Instantiate(bullet, bullet.transform.position, Quaternion.identity) as GameObject;
+        bulletClone.SetActive(true);
+        Rigidbody rb = bulletClone.GetComponent<Rigidbody>();
+        rb.AddRelativeForce(-transform.forward * bulletSpeed);
+        Destroy(bulletClone, bulletLife);
+	*/
+    }
+}
