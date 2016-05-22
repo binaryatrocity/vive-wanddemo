@@ -37,7 +37,7 @@ namespace DigitalRuby.PyroParticles
         public float ProjectileColliderSpeed = 450.0f;
 
         [Tooltip("The direction that the collider will go. For example, flame strike goes down, and fireball goes forward.")]
-        public Vector3 ProjectileDirection = Vector3.forward;
+        public Vector3 ProjectileDirection = Vector3.zero; //Vector3.forward;
 
         [Tooltip("What layers the collider can collide with.")]
         public LayerMask ProjectileCollisionLayers = Physics.AllLayers;
@@ -62,6 +62,7 @@ namespace DigitalRuby.PyroParticles
         protected override void Start()
         {
             base.Start();
+	    Debug.Log("startttt");
             StartCoroutine(SendCollisionAfterDelay());
         }
 

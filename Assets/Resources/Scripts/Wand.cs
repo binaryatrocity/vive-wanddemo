@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
-using DigitalRuby.PyroParticles;
 
 public class Wand : SteamVR_InteractableObject
 {
-    GameObject bullet;
-    GameObject bulletClone;
+    float spellSpeed = 1000f;
+    GameObject selectedSpell;
+    GameObject spellClone;
 
     public override void StartUsing(GameObject usingObject)
     {
         base.StartUsing(usingObject);
-        FireBullet();
+        CastSpell();
     }
 
     protected override void Start()
     {
         base.Start();
-        bullet = this.transform.Find("Firebolt").gameObject;
+        selectedSpell = this.transform.Find("Spell_Fireball").gameObject;
     }
 
     protected override void Update()
@@ -24,14 +24,14 @@ public class Wand : SteamVR_InteractableObject
 	    base.Update();
     }
 
-    void FireBullet()
+    void CastSpell()
     {
-	bulletClone = Instantiate(bullet, bullet.transform.position, Quaternion.identity) as GameObject;
-	FireProjectileScript projectileScript = bulletClone.GetComponentInChildren<FireProjectileScript>();
-	projectileScript.ProjectileCollisionLayers &= (~UnityEngine.LayerMask.NameToLayer("FriendlyLayer"));
+	spellClone = Instantiate(selectedSpell, transform.position, Quaternion.identity) as GameObject;
+	SpellController spellController = spellClone.GetComponent<SpellController>();
+	spellController.startPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.4f);
+	spellController.startDirection = transform.up;
 
-	//bulletClone.transform.parent = null;
-	transform.parent = null;
-	bulletClone.SetActive(true);
+	spellClone.SetActive(true);
+
     }
 }
